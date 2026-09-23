@@ -1,0 +1,10 @@
+# AI-Suplex Ultra — product preview (static)
+#
+# The site is PLAIN STATIC HTML/CSS at the repo root (index.html + assets/).
+# The Vite / React files are unused AI Studio scaffolding (src/App.tsx renders an
+# empty div). Without this file Netlify detects Vite, runs a build, and publishes
+# an empty dist/ directory. So: publish the root, run NO build.
+
+[build]
+  publish = "."
+  command = ""
