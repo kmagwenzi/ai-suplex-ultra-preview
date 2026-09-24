@@ -1,6 +1,0 @@
-{
-  "name": "AI-Suplex Ultra",
-  "description": "AI-Suplex Ultra is the paid harness on top of the free AI-Suplex 777 library: the Gauntlet, Graph RAG, and the weekly promotion pipeline that turn agent memory into compounding advantage.",
-  "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
-}
