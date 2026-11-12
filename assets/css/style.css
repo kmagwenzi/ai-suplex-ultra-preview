@@ -894,6 +894,14 @@ html {
 .waitlist-section:has(#waitlist-success:target) .waitlist-form { display: none; }
 .waitlist-section:has(#waitlist-success:target) .qualifier-antecedent { display: none; }
 
+/* T008 confirm: mobile header — declutter so the primary CTA never clips */
+@media (max-width: 560px) {
+  .header-actions .btn-ghost { display: none; }
+  .brand-badge { display: none; }
+  .brand-title { font-size: 1.05rem; }
+  .header-actions { gap: 0.5rem; }
+}
+
 /* Motion & Accessibility */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
