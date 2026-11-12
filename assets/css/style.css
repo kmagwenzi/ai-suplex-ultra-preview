@@ -1,7 +1,6 @@
-/* hallmark: genre: atmospheric, posture: precision-instrument, theme: navy-gold */
+/* Hallmark · v2.0.0 · genre: atmospheric · theme: navy-gold (by request) · date: 2026-11-11 · posture: committed · surface: absolute · hero: thesis left, two actions under · nav: edge-aligned, wordmark and two actions · footer: mast, brand left, link columns right · prompt: ultra front door sales page, honest numbers, waitlist conversion */
 /* Critique: Ultra front door sales and waitlist instrument. Authoritative, high contrast. */
 
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Serif:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
 
 :root {
   --color-paper: #080e1a;
@@ -10,12 +9,12 @@
   --color-surface-solid: #121e35;
   --color-surface-elev: #1a2947;
   --color-line: rgba(255, 255, 255, 0.08);
-  --color-line-strong: rgba(255, 255, 255, 0.16);
+  --color-line-strong: rgba(255, 255, 255, 0.14);
   --color-line-subtle: rgba(255, 255, 255, 0.05);
   --color-line-hover: rgba(255, 255, 255, 0.22);
   --color-ink: #f1f5f9;
   --color-ink-muted: #94a3b8;
-  --color-ink-sub: rgba(148, 163, 184, 0.65);
+  --color-ink-sub: rgba(148, 163, 184, 0.92);
   --color-gold: #b8862e;
   --color-gold-hi: #d4a94f;
   --color-gold-hover: #dfb75e;
@@ -26,12 +25,11 @@
   --color-strip-bg: rgba(184, 134, 46, 0.08);
   --color-strip-border: rgba(184, 134, 46, 0.22);
   --color-selection-bg: rgba(212, 169, 79, 0.32);
-  --color-selection-ink: #f8fafc;
+  --color-selection-ink: var(--color-ink);
   --color-dark-input: rgba(8, 14, 26, 0.88);
   --color-dark-box: rgba(0, 0, 0, 0.4);
   --color-code-bg: rgba(0, 0, 0, 0.32);
   --color-cream: #e8d5a8;
-  --color-ok: #10b981;
 
   --font-serif: 'IBM Plex Serif', Georgia, Cambria, serif;
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -39,7 +37,7 @@
 
   --max-w: 1120px;
   --radius-sm: 4px;
-  --radius: 8px;
+  --radius: 6px;
   --radius-card: 12px;
   --radius-pill: 9999px;
 
@@ -95,12 +93,7 @@ button, input, select, textarea {
 body {
   min-height: 100vh;
   background-color: var(--color-paper);
-  background-image:
-    radial-gradient(ellipse 70% 35% at 50% -5%, var(--color-gold-sub) 0%, transparent 60%),
-    linear-gradient(rgba(148, 163, 184, 0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(148, 163, 184, 0.035) 1px, transparent 1px);
-  background-size: 100% 100%, 32px 32px, 32px 32px;
-  background-attachment: fixed;
+  background-image: radial-gradient(ellipse 70% 35% at 50% -5%, var(--color-gold-sub) 0%, transparent 60%);
 }
 
 .container {
@@ -176,7 +169,6 @@ body {
 .nav-link {
   font-size: 0.875rem;
   color: var(--color-ink-muted);
-  transition: color var(--motion-fast) var(--ease);
 }
 
 .nav-link:hover {
@@ -206,9 +198,8 @@ body {
   border: 1px solid transparent;
   cursor: pointer;
   white-space: nowrap;
-  transition: background-color var(--motion-fast) var(--ease),
-              border-color var(--motion-fast) var(--ease),
-              color var(--motion-fast) var(--ease);
+  transition: opacity var(--motion-fast) var(--ease),
+              transform var(--motion-fast) var(--ease);
 }
 
 .btn-primary {
@@ -259,6 +250,7 @@ body {
 .btn-sm {
   padding: 0.4rem 0.875rem;
   font-size: 0.8125rem;
+  min-height: 44px;
 }
 
 /* Status Banner */
@@ -286,7 +278,6 @@ body {
   height: 7px;
   border-radius: var(--radius-pill);
   background-color: var(--color-gold-hi);
-  box-shadow: 0 0 8px var(--color-gold-hi);
 }
 
 .status-strip a {
@@ -343,13 +334,14 @@ body {
   flex-wrap: wrap;
   align-items: center;
   gap: 1rem;
+  list-style: none;
   margin-top: 1.5rem;
   font-family: var(--font-mono);
   font-size: 0.8125rem;
   color: var(--color-cream);
 }
 
-.hero-gap-pill span {
+.hero-gap-pill li {
   background: var(--color-surface);
   border: 1px solid var(--color-line);
   padding: 0.25rem 0.65rem;
@@ -481,7 +473,6 @@ body {
   border: 1px solid var(--color-line);
   border-radius: var(--radius-card);
   padding: 1.75rem;
-  transition: border-color var(--motion-fast) var(--ease);
 }
 
 .card:hover {
@@ -656,7 +647,7 @@ body {
 }
 
 .pricing-check {
-  color: var(--color-ok);
+  color: var(--color-gold-hi);
   font-weight: 700;
 }
 
@@ -702,7 +693,6 @@ body {
   padding: 0.75rem 1rem;
   color: var(--color-ink);
   font-size: 0.9375rem;
-  transition: border-color var(--motion-fast) var(--ease);
 }
 
 .form-input:focus, .form-select:focus {
@@ -751,7 +741,7 @@ body {
   }
 }
 
-.footer-brand h3 {
+.footer-brand-title {
   font-family: var(--font-serif);
   font-size: 1.25rem;
   color: var(--color-ink);
@@ -764,9 +754,10 @@ body {
   max-width: 380px;
 }
 
-.footer-nav-col h4 {
+.footer-col-label {
   font-family: var(--font-sans);
   font-size: 0.8125rem;
+  font-weight: 600;
   color: var(--color-gold-hi);
   margin-bottom: 0.75rem;
 }
@@ -795,7 +786,7 @@ body {
   padding-top: 2rem;
   border-top: 1px solid var(--color-line);
   font-family: var(--font-sans);
-  font-size: 0.75rem;
+  font-size: 0.8125rem;
   color: var(--color-ink-sub);
 }
 
@@ -806,6 +797,102 @@ body {
     align-items: center;
   }
 }
+
+/* Stage III batch: front-door fix pass */
+html {
+  scroll-padding-top: 5.5rem;
+}
+[id] {
+  scroll-margin-top: 5.5rem;
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+  background: var(--color-gold-hi);
+  color: var(--color-paper);
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+}
+.skip-link:focus-visible { left: 0; }
+
+.card-ico {
+  width: 20px;
+  height: 20px;
+  color: var(--color-gold-hi);
+  flex-shrink: 0;
+}
+
+.h3-glyph {
+  width: 0.85em;
+  height: 0.85em;
+  color: var(--color-gold-hi);
+}
+
+.grid-note {
+  margin-top: 1.5rem;
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  color: var(--color-ink-muted);
+}
+.grid-note code { color: var(--color-cream); }
+
+.demo-meta { display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--color-ink-muted); }
+.demo-meta-gold { color: var(--color-gold-hi); }
+.demo-q { font-size: 0.875rem; color: var(--color-ink); margin-top: 0.75rem; }
+.demo-delta { font-size: 0.75rem; color: var(--color-gold-hi); margin-top: 0.5rem; }
+.demo-cta { margin-top: 1.5rem; }
+.demo-preview-card {
+  background-image:
+    linear-gradient(var(--color-line-subtle) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-line-subtle) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.qualifier-antecedent {
+  margin-top: 1.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  color: var(--color-ink-muted);
+}
+
+.pricing-tier-label { font-family: var(--font-sans); font-size: 0.75rem; color: var(--color-ink-muted); }
+.pricing-tier-label-gold { font-family: var(--font-sans); font-size: 0.75rem; color: var(--color-gold-hi); }
+.pricing-name { font-family: var(--font-serif); font-size: 1.75rem; color: var(--color-ink); margin-top: 0.5rem; }
+.price-alt { font-size: 1.25rem; font-family: var(--font-mono); color: var(--color-gold); }
+.pricing-actions { margin-top: auto; display: flex; flex-direction: column; gap: 0.5rem; }
+.btn-block { width: 100%; }
+.pricing-footnote {
+  text-align: center;
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  color: var(--color-ink-muted);
+  margin-top: 0.5rem;
+}
+
+.footer-cols { display: flex; gap: 3rem; flex-wrap: wrap; }
+
+.demo-band { color: var(--color-ink); }
+.pricing-card-featured { color: var(--color-ink); }
+.waitlist-section { color: var(--color-ink); }
+
+.waitlist-success {
+  display: none;
+  margin-top: 2rem;
+  padding: 1.5rem;
+  border: 1px solid var(--color-gold-border);
+  background: var(--color-gold-bg);
+  border-radius: var(--radius-card);
+  text-align: center;
+}
+.waitlist-success h3 { font-family: var(--font-serif); font-size: 1.35rem; color: var(--color-ink); }
+.waitlist-success p { margin-top: 0.5rem; color: var(--color-ink-muted); font-size: 0.9375rem; }
+.waitlist-success a { color: var(--color-gold-hi); text-decoration: underline; text-underline-offset: 3px; }
+#waitlist-success:target { display: block; }
+.waitlist-section:has(#waitlist-success:target) .waitlist-form { display: none; }
+.waitlist-section:has(#waitlist-success:target) .qualifier-antecedent { display: none; }
 
 /* Motion & Accessibility */
 @media (prefers-reduced-motion: reduce) {
