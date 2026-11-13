@@ -911,3 +911,124 @@ html {
     scroll-behavior: auto !important;
   }
 }
+
+/* ==========================================================================
+   Restored hero elements + scroll reveal
+   (previous AI Studio version, restored per Hustler directive 2026-11-13)
+   Tokens only; motion on opacity/transform; reduced motion renders final state.
+   ========================================================================== */
+
+.hero-badge {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--color-cream);
+  background: rgba(22, 37, 66, 0.6);
+  border: 1px solid var(--color-line-strong);
+  border-radius: var(--radius-pill);
+  padding: 0.35rem 0.95rem;
+  margin: 0 0 1.4rem;
+}
+
+.pull-quote {
+  background: var(--color-surface);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--color-line);
+  border-left: 3px solid var(--color-gold-hi);
+  border-radius: var(--radius);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  padding: 0.9rem 1.25rem;
+  margin: 1.7rem 0 0;
+  max-width: 34rem;
+}
+
+.pull-quote p {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--color-cream);
+  letter-spacing: -0.01em;
+}
+
+.typewriter-wrapper {
+  display: inline;
+}
+
+.typewriter-text {
+  color: var(--color-gold-hi);
+  display: inline;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+@keyframes cursor-blink {
+  50% { opacity: 0; }
+}
+
+.typewriter-cursor {
+  display: inline-block;
+  margin-left: 2px;
+  width: 3px;
+  height: 0.88em;
+  vertical-align: -0.06em;
+  background-color: var(--color-gold-hi);
+  animation: cursor-blink 1.1s step-end infinite;
+}
+
+/* Scroll reveal — default fully visible (no JS); JS progressive enhancement */
+.reveal {
+  opacity: 1;
+  transform: none;
+}
+
+html.has-js .reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+html.has-js .reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+html.has-js .delay-1 { transition-delay: 0.08s; }
+html.has-js .delay-2 { transition-delay: 0.16s; }
+html.has-js .delay-3 { transition-delay: 0.24s; }
+html.has-js .delay-4 { transition-delay: 0.32s; }
+html.has-js .delay-5 { transition-delay: 0.40s; }
+html.has-js .delay-6 { transition-delay: 0.48s; }
+
+/* Native CSS scroll-driven animations where supported (no-JS path) */
+@supports (animation-timeline: view()) {
+  html:not(.has-js) .reveal {
+    animation: scrollFadeIn linear both;
+    animation-timeline: view();
+    animation-range: entry 5% cover 25%;
+  }
+
+  @keyframes scrollFadeIn {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: none; }
+  }
+}
+
+/* Reduced motion — final states immediately; cursor is noise, hide it */
+@media (prefers-reduced-motion: reduce) {
+  html.has-js .reveal,
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+    animation: none !important;
+  }
+
+  .typewriter-cursor {
+    display: none;
+  }
+}
