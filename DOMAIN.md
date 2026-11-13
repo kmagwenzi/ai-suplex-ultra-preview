@@ -15,6 +15,23 @@
 | ai-suplex-ultra-preview.netlify.app | 35.157.26.135 · 63.176.8.218 | **timeout** |
 | the same preview via an external fetcher | — | **200, 7,128 bytes** |
 
+> **RESOLVED 2026-11-13 14:09 — all three hosts answer from the reachable edge.**
+>
+> `./scripts/verify-domain.sh --all` → **30 passed · 0 failed · "WIRED: every tested host answers from the reachable Netlify edge."**
+>
+> | Host | A record | Result |
+> |---|---|---|
+> | **ultra.ai-suplex.co.zw** | 75.2.60.5 | **200** · Let's Encrypt `CN=ultra.ai-suplex.co.zw` (issued 06:58 GMT, valid to 11 Feb 2027) |
+> | **ai-suplex.co.zw** | 75.2.60.5 | 200 |
+> | **www.ai-suplex.co.zw** | 75.2.60.5 | 301 → apex · valid cert |
+> | **wqr.co.zw** | 75.2.60.5 | 200 · "WhatsApp Quick Responder (WQR)" |
+> | **www.wqr.co.zw** | 75.2.60.5 | 301 → apex |
+> | **app.wqr.co.zw** | 75.2.60.5 | 307 → `/login` · "WQR · Agents Terminal" |
+>
+> **Still open, deliberately:** `app.ai-suplex.co.zw` points at the two blocked anycast addresses but `75.2.60.5` presents **no certificate for it**, so the same A-record fix does not apply — it is not a domain on the site that LB serves. It needs its own investigation, not a copy of this one.
+>
+> **Verification now measures the internet, not this laptop.** The script resolves through `1.1.1.1` when reachable; systemd-resolved had cached the old `www` CNAME for its 4-hour TTL, which made a live fix read as broken.
+
 ---
 
 ## 2 · The finding

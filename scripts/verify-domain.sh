@@ -4,6 +4,19 @@
 set -u
 
 LB="75.2.60.5"
+
+# Measure what the internet sees, not what this laptop's cache remembers.
+# Systemd-resolved caches CNAMEs for the record TTL (often 4h), so a fixed record
+# can read as broken for hours after the change. Prefer a public resolver; fall
+# back to the local one only if it is unreachable.
+PUBLIC_RESOLVER="${PUBLIC_RESOLVER:-1.1.1.1}"
+DNS=""
+if [ -n "$(dig @"$PUBLIC_RESOLVER" +short +time=3 +tries=1 ai-suplex.co.zw A 2>/dev/null)" ]; then
+  DNS="@$PUBLIC_RESOLVER"
+  RESOLVER_NOTE="public $PUBLIC_RESOLVER"
+else
+  RESOLVER_NOTE="local (public resolver unreachable)"
+fi
 TEST_WWW=0
 TEST_WQR=0
 for arg in "$@"; do
@@ -35,9 +48,9 @@ verify_host() { # verify_host <host> <body-marker>
   echo ""
   echo "== $h"
 
-  cname=$(dig +short CNAME "$h" 2>/dev/null | head -1)
-  a=$(dig +short A "$h" 2>/dev/null | grep -E '^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$' | head -1)
-  aaaa=$(dig +short AAAA "$h" 2>/dev/null | grep ':' | head -1)
+  cname=$(dig $DNS +short CNAME "$h" 2>/dev/null | head -1)
+  a=$(dig $DNS +short A "$h" 2>/dev/null | grep -E '^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$' | head -1)
+  aaaa=$(dig $DNS +short AAAA "$h" 2>/dev/null | grep ':' | head -1)
 
   if [ -n "$cname" ]; then
     note "CNAME -> $cname"
@@ -107,8 +120,8 @@ verify_alias() { # verify_alias <host> <body-marker> — a host that legitimatel
   echo ""
   echo "== $h (alias — may redirect)"
 
-  a=$(dig +short A "$h" 2>/dev/null | grep -E '^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$' | head -1)
-  cname=$(dig +short CNAME "$h" 2>/dev/null | head -1)
+  a=$(dig $DNS +short A "$h" 2>/dev/null | grep -E '^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$' | head -1)
+  cname=$(dig $DNS +short CNAME "$h" 2>/dev/null | head -1)
   if [ -n "$cname" ] && [ "$cname" != "" ]; then
     case "$cname" in
       *netlify.app*) check 0 "CNAME points into *.netlify.app: $cname" ;;
@@ -163,10 +176,12 @@ verify_alias() { # verify_alias <host> <body-marker> — a host that legitimatel
 }
 
 echo "=== domain verification · $(date -u +%Y-%m-%dT%H:%MZ) ==="
-echo "edge target: $LB"
+echo "edge target: $LB · resolver: $RESOLVER_NOTE"
 
 verify_host "ultra.ai-suplex.co.zw" "Ultra"
-if [ "$TEST_WWW" = "1" ]; then verify_host "www.ai-suplex.co.zw" "AI-Suplex"; fi
+# www is an alias: it legitimately 301s to the apex, so it gets the alias check,
+# not the 200-on-first-hop check.
+if [ "$TEST_WWW" = "1" ]; then verify_alias "www.ai-suplex.co.zw" "ai-suplex"; fi
 if [ "$TEST_WQR" = "1" ]; then
   verify_host "wqr.co.zw" "Quick Responder"
   verify_alias "www.wqr.co.zw" "quick responder"
