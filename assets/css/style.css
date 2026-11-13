@@ -329,6 +329,51 @@ body {
   font-weight: 600;
 }
 
+/* Two-layer hero (2026-11-13 · 21:49 artifact): identity headline + rotating promise */
+.hero-promise {
+  margin-top: 1.1rem;
+  font-family: var(--font-serif);
+  font-size: 1.45rem;
+  line-height: 1.3;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--color-ink);
+  min-height: 1.4em;
+}
+
+@media (min-width: 768px) {
+  .hero-promise {
+    font-size: 1.9rem;
+  }
+}
+
+@media (max-width: 640px) {
+  /* Longest phrase wraps to two lines on phones — reserve the space so the
+     typewriter never pushes the subhead around while it types. */
+  .hero-promise {
+    min-height: 2.7em;
+  }
+}
+
+.hero-trust {
+  margin-top: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--color-ink-sub);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 .hero-gap-pill {
   display: flex;
   flex-wrap: wrap;
