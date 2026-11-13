@@ -51,16 +51,26 @@ Proof, not inference:
 It is the live product surface, it is dead locally, and the zone is on **Netlify DNS** (dns1–dns4.p02.nsone.net), so no one else has to act.
 
 1. Netlify → **Domains** → **wqr.co.zw** → **DNS records**.
-2. Edit the apex **A** record to **75.2.60.5**; delete any other apex A records.
-3. Leave MX/SPF/TXT and the www record alone unless www is also aimed at the two bad IPs — check it while you are there.
-4. Wait 2–5 minutes, then:
+2. ⚠️ **There is no apex A row to edit.** The apex is a **`NETLIFY`-type record** — `wqr.co.zw · 3600 · NETLIFY · wqrzim.netlify.app` — Netlify's managed record. It always resolves into Netlify's anycast pool, which is exactly the two blocked addresses, and it cannot be turned into an A record.
+3. **Replace it:** chevron `˅` at the end of the row → **Delete record** → **Add new record** → Name `@` · Type **A** · Value **75.2.60.5** · TTL `3600`.
+4. Do the same for **`www.wqr.co.zw`** and **`app.wqr.co.zw`** — both are `NETLIFY` records on the same blocked pool. All three were accepted by `75.2.60.5` (measured 2026-11-13):
+
+   | hostname | at **75.2.60.5** | now (blocked edge) |
+   |---|---|---|
+   | `wqr.co.zw` | **200** · "WhatsApp Quick Responder (WQR)" | timeout |
+   | `www.wqr.co.zw` | **301** → apex | timeout |
+   | `app.wqr.co.zw` | **307** · "WQR · Agents Terminal" | timeout |
+
+5. Wait 2–5 minutes, then:
 
 ~~~bash
 dig +short A wqr.co.zw          # expect: 75.2.60.5
 curl -sI https://wqr.co.zw/     # expect: HTTP/2 200
 ~~~
 
-If Netlify marks the record as manager-owned and will not let you edit it, remove and re-add the domain on the site so Netlify re-provisions, then edit again. Re-check a day later: Netlify sometimes restores its preferred records.
+**Why this is safe:** `75.2.60.5` is a Netlify load balancer as well — it routes by Host/SNI, so it presents the correct certificate and the correct site for every one of these names. It is the same address the apex `ai-suplex.co.zw` has used all along.
+
+Netlify can re-provision a managed `NETLIFY` record on later domain changes — re-check a day later and repeat if it reappears.
 
 ---
 
